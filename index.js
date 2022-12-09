@@ -1,3 +1,4 @@
+import fs from 'fs'
 import straightSolver from "./straightSolver.js";
 import reverseSolver from "./reverseSolver.js";
 import trapezoidIntegral from "./trapezoidIntegral.js";
@@ -19,6 +20,9 @@ while (true){
     let norm = Math.sqrt((x[x.length - 1][0] - y1) ** 2 + (x[x.length - 1][1] - y2) ** 2)
     if(norm < eps) {
         console.log(`Точка x: (${x[x.length - 1][0]}, ${x[x.length - 1][1]}). Норма ${norm}`)
+        /* https://chart-studio.plotly.com/create/#/ */
+        fs.writeFile('./export/x.csv', x.map((x, i) => `${tau * i},${x[0]},${x[1]}`).join("\n"), 'utf8', e => {if(e) console.log(e)})
+        fs.writeFile('./export/u.csv', u.map((x, i) => `${tau * i},${x[0]},${x[1]}`).join("\n"), 'utf8', e => {if(e) console.log(e)})
         break
     }
     const psi = reverseSolver(x[x.length - 1], [y1, y2], steps, tau)
